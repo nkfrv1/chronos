@@ -2,6 +2,8 @@ const dotenvExpand = require('dotenv-expand');
 dotenvExpand.expand(require('dotenv').config());
 const express = require('express');
 const cors = require('cors');
+const errorMiddleware = require('./middlewares/error-middleware');
+const userRouter = require('./routers/user-router');
 
 
 const app = express();
@@ -14,10 +16,9 @@ app.use(cors({
     credentials: true
 }));
 app.disable('x-powered-by');
+app.use('/api', userRouter);
+app.use(errorMiddleware);
 
-app.get('/', (req, res) => {
-    res.send(`<h1>Root</h1>`);
-});
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
