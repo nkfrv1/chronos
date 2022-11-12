@@ -3,7 +3,7 @@ const uniqueFilename = require('unique-filename');
 const { hash } = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
-const ApiError = require('../exceptions/api-error');
+const { ApiError, formatValidationError } = require('../exceptions/api-error');
 const User = require('../models/user');
 
 
@@ -27,20 +27,16 @@ const removeFile = async (id) => {
     }
 }
 
-const errorFormatter = ({ value, msg, param, location, }) => {
-    return `${param}: ${msg}`;
-}
-
 class UserController {
     async createUser(req, res, next) {
         try {
-            const errors = validationResult(req).formatWith(errorFormatter);
+            const errors = validationResult(req).formatWith(formatValidationError);
             if (!errors.isEmpty()) {
-                throw new ApiError(400, 'Validation Error', { errors: errors.array() });
+                throw ApiError.ValidationError({ errors: errors.array() });
             }
             const { username, password, email, fullname } = req.body;
             const uploadedPicture = req.files?.profpic;
-            let profpic = (uploadedPicture) ? await saveFile(uploadedPicture) : undefined;
+            const profpic = (uploadedPicture) ? await saveFile(uploadedPicture) : undefined;
             const hashedPassword = (password) ? await hash(password, 4) : undefined;
             const createdUser = await User.create({
                 username: username,
@@ -84,8 +80,7 @@ class UserController {
             }
             const { username, password, email, fullname, profpic } = req.body;
             const uploadedPicture = req.files?.profpic;
-            // Implemented in a such way to let user remove it's profile picture via updating profile
-            let profilePicture = (uploadedPicture) ? await saveFile(uploadedPicture) : profpic;
+            const profilePicture = (uploadedPicture) ? await saveFile(uploadedPicture) : profpic;
             const hashedPassword = (password) ? await hash(password, 4) : undefined;
             await target.update({
                 username: username,

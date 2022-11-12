@@ -2,6 +2,7 @@ const dotenvExpand = require('dotenv-expand');
 dotenvExpand.expand(require('dotenv').config());
 const express = require('express');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 const errorMiddleware = require('./middlewares/error-middleware');
 const userRouter = require('./routers/user-router');
 
@@ -16,6 +17,7 @@ app.use(cors({
     credentials: true
 }));
 app.disable('x-powered-by');
+app.use(fileUpload());
 app.use('/api', userRouter);
 app.use(errorMiddleware);
 

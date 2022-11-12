@@ -21,18 +21,14 @@ User.init({
         allowNull: false
     },
     email: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(75),
         unique: true,
         allowNull: false,
-        validate: {
-            isEmail: true
-        }
+        validate: { isEmail: true }
     },
     fullname: {
-        type: DataTypes.STRING,
-        validate: {
-            is: /^[a-zA-Z]+ [a-zA-Z]+$/
-        }
+        type: DataTypes.STRING(64),
+        validate: { is: /^[a-zA-Z]+ [a-zA-Z]+$/ }
     },
     profpic: {
         type: DataTypes.STRING
