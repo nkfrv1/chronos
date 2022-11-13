@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const errorMiddleware = require('./middlewares/error-middleware');
+const authRouter = require('./routers/auth-router');
 const userRouter = require('./routers/user-router');
 
 
@@ -18,7 +19,7 @@ app.use(cors({
 }));
 app.disable('x-powered-by');
 app.use(fileUpload());
-app.use('/api', userRouter);
+app.use('/api', authRouter, userRouter);
 app.use(errorMiddleware);
 
 

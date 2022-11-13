@@ -12,12 +12,24 @@ class ApiError extends Error {
         this.errors = errors;
     }
 
+    static ValidationError(errors) {
+        return new ApiError(400, 'Validation Error', errors);
+    }
+
     static BadRequest(message) {
         return new ApiError(400, message);
     }
 
-    static ValidationError(errors) {
-        return new ApiError(400, 'Validation Error', errors);
+    static Forbidden(message) {
+        return new ApiError(403, message);
+    }
+
+    static NotFound(message) {
+        return new ApiError(404, message);
+    }
+
+    static Unacceptable(message) {
+        return new ApiError(406, message); 
     }
 }
 

@@ -10,10 +10,8 @@ module.exports = function (error, req, res, next) {
     }
     if (error.name === 'SequelizeValidationError') {
         const errors = [];
-        error.errors.forEach((e) => {
-            errors.push(e.message);
-        });
-        return res.status(400).json(errors);
+        error.errors.forEach(e => errors.push(e.message));
+        return res.status(400).json({ errors: errors });
     }
     return res.status(500).json('Unexpected error has occured');
 }
