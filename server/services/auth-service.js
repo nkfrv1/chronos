@@ -3,6 +3,7 @@ const { randomUUID } = require('crypto');
 const { Op } = require('sequelize');
 const User = require("../models/user");
 const mailService = require("./mail-service");
+const tokenService = require("./token-service");
 const { ApiError } = require("../exceptions/api-error");
 
 
@@ -23,7 +24,11 @@ class AuthService {
             password: hashedPassword,
             email: email
         });
-        return user;
+        const link = randomUUID();
+        await mailService.sendActivationLink(user.email, link);
+        const tokens = tokenService.generateTokens({ id: user.id, username: user.username });
+        await tokenService.saveTokens(user.id, tokens.refreshToken);
+        return tokens;
     }
 
     login = async (username, password) => {
@@ -31,11 +36,35 @@ class AuthService {
         if (!user || await compare(password, user.password) === false) {
             throw ApiError.BadRequest('Invalid credentials were given');
         }
-        return user;
+        const tokens = tokenService.generateTokens({ id: user.id, username: user.username });
+        await tokenService.saveTokens(user.id, tokens.refreshToken);
+        return tokens;
     }
 
-    logout = async () => {
-
+    refresh = async (refreshToken) => {
+        if (!refreshToken) {
+            throw ApiError.Unauthorized();
+        }
+        const tokenPayload = tokenService.verifyRefreshToken(refreshToken);
+        const foundToken = await tokenService.findRefreshToken(refreshToken);
+        if (!tokenPayload || !foundToken) {
+            throw ApiError.Unauthorized();
+        }
+        const user = await User.findByPk(tokenPayload.id);
+        const tokens = tokenService.generateTokens({ id: user.id, username: user.username });
+        await tokenService.saveTokens(user.id, tokens.refreshToken);
+        return tokens;
+    }
+    
+    logout = async (refreshToken) => {
+        if (!refreshToken) {
+            throw ApiError.Unauthorized(`You aren't logged in yet`);
+        }
+        const result = await tokenService.removeToken(refreshToken);
+        if (result !== 1) {
+            throw new Error();
+        }
+        return 'Logged Out';
     }
 
     resetPassword = async (email) => {

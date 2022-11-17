@@ -14,6 +14,7 @@ class AuthController {
             }
             const { username, password, confirmation, email } = req.body;
             const data = await authService.register(username, password, confirmation, email);
+            res.cookie('refreshToken', data.refreshToken, { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true });
             res.json(data);
         } catch (error) {
             next(error);
@@ -28,14 +29,33 @@ class AuthController {
             }
             const { username, password } = req.body;
             const data = await authService.login(username, password);
+            res.cookie('refreshToken', data.refreshToken, { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true });
             res.json(data);
         } catch (error) {
             next(error);
         }
     }
 
+    async refresh(req, res, next) {
+        try {
+            const { refreshToken } = req.cookies;
+            const data = await authService.refresh(refreshToken);
+            res.cookie('refreshToken', data.refreshToken, { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true });
+            res.json(data);
+        } catch (error) {
+            next(error);
+        }
+    }
+    
     async logout(req, res, next) {
-
+        try {
+            const { refreshToken } = req.cookies;
+            const data = await authService.logout(refreshToken);
+            res.clearCookie('refreshToken');
+            res.json(data);
+        } catch (error) {
+            next(error);
+        }
     }
 
     resetPassword = async (req, res, next) => {

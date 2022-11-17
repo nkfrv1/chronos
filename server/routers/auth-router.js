@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
+const authMiddleware = require('../middlewares/auth-middleware');
 const authController = require('../controllers/auth-controller');
 
 const router = new Router();
@@ -24,7 +25,8 @@ router.post(
     body('password', 'Invalid data given').trim()
         .notEmpty().withMessage('Password field cannot be empty'),
     authController.login);
-router.post('/auth/logout', authController.logout);
+router.get('/auth/refresh-token', authController.refresh);
+router.post('/auth/logout', authMiddleware, authController.logout);
 router.post(
     '/auth/password-reset',
     body('email', 'Email validation failed, please double check').trim().notEmpty().isEmail(),

@@ -30,6 +30,24 @@ class MailService {
                 `
         });
     }
+
+    async sendActivationLink(email, link) {
+        await this.transporter.sendMail({
+            from: process.env.SMTP_EMAIL,
+            to: email,
+            subject: 'Chronos Account Activation',
+            html:
+                `
+                    <div>
+                        <h1>Follow the link below to activate your account</h1>
+                        <h3>
+                            <a href="${process.env.CLIENT_URL}/activation/${link}">*Click to Activate*</a>
+                        </h3>
+                        <p><em>Don't reply to this message</em></p>
+                    </div>
+                `
+        });
+    }
 }
 
 module.exports = new MailService();
