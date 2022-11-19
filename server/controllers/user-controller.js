@@ -24,7 +24,17 @@ class UserController {
     async getSpecificUser(req, res, next) {
         try {
             const requestedId = req.params.id;
-            const data = await userService.getSpecific(requestedId);
+            const data = await userService.getOne(requestedId);
+            res.json(data);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async getUserCalendars(req, res, next) {
+        try {
+            const requestedId = req.params.id;
+            const data = await userService.getCalendars(requestedId);
             res.json(data);
         } catch (error) {
             next(error);

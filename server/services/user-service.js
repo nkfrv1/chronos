@@ -3,6 +3,7 @@ const { hash } = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
 const User = require("../models/user");
+const Calendar = require('../models/calendar');
 const { ApiError } = require('../exceptions/api-error');
 
 
@@ -51,12 +52,21 @@ class UserService {
         return users;
     }
 
-    async getSpecific(userId) {
+    async getOne(userId) {
         const target = await User.findByPk(userId);
         if (!target) {
             throw ApiError.NotFound('Wrong user requested');
         }
         return target;
+    }
+
+    async getCalendars(userId) {
+        const target = await User.findByPk(userId);
+        if (!target) {
+            throw ApiError.NotFound('Wrong user requested');
+        }
+        const calendars = await Calendar.findAll({ where: { author: userId } });
+        return calendars;
     }
 
     async update(userId, username, password, email, fullname, profpic, uploadedPicture) {

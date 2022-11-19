@@ -6,6 +6,9 @@ const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const authRouter = require('./routers/auth-router');
 const userRouter = require('./routers/user-router');
+const calendarRouter = require('./routers/calendar-router');
+const categoryRouter = require('./routers/category-router');
+const eventRouter = require('./routers/event-router');
 const errorMiddleware = require('./middlewares/error-middleware');
 
 
@@ -21,7 +24,7 @@ app.use(cors({
 }));
 app.disable('x-powered-by');
 app.use(fileUpload());
-app.use('/api', authRouter, userRouter);
+app.use('/api', authRouter, userRouter, calendarRouter, categoryRouter, eventRouter);
 app.use(errorMiddleware);
 
 
