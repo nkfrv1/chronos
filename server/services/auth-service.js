@@ -61,7 +61,15 @@ class AuthService {
         const user = await User.findByPk(tokenPayload.id);
         const tokens = tokenService.generateTokens({ id: user.id, username: user.username });
         await tokenService.saveTokens(user.id, tokens.refreshToken);
-        return tokens;
+        return {
+            tokens,
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                fullname: user.fullname
+            }
+        };
     }
     
     logout = async (refreshToken) => {
