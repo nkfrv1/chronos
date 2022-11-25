@@ -29,7 +29,7 @@ class AuthController {
             }
             const { username, password } = req.body;
             const data = await authService.login(username, password);
-            res.cookie('refreshToken', data.refreshToken, { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true });
+            res.cookie('refreshToken', data.tokens.refreshToken, { maxAge: 1000 * 60 * 60 * 24 * 7, httpOnly: true });
             res.json(data);
         } catch (error) {
             next(error);

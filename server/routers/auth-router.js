@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
-const authMiddleware = require('../middlewares/auth-middleware');
 const authController = require('../controllers/auth-controller');
 
 const router = new Router();
@@ -9,7 +8,7 @@ router.post(
     '/auth/register',
     body('username', 'Invalid data given').trim()
         .notEmpty().withMessage('Username field cannot be empty')
-        .isLength({ min: 4, max: 36 }).withMessage('Login must be at least 4 and at most 36 characters long')
+        .isLength({ min: 4, max: 20 }).withMessage('Username must be at least 4 and at most 20 characters long')
         .isAlphanumeric().withMessage('Only letters and digits are allowed'),
     body('password', 'Invalid data given').trim()
         .notEmpty().withMessage('Password field cannot be empty')
@@ -26,7 +25,7 @@ router.post(
         .notEmpty().withMessage('Password field cannot be empty'),
     authController.login);
 router.get('/auth/refresh-token', authController.refresh);
-router.post('/auth/logout', authMiddleware, authController.logout);
+router.post('/auth/logout', authController.logout);
 router.post(
     '/auth/password-reset',
     body('email', 'Email validation failed, please double check').trim().notEmpty().isEmail(),

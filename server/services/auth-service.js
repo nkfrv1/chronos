@@ -24,8 +24,8 @@ class AuthService {
             password: hashedPassword,
             email: email
         });
-        const link = randomUUID();
-        await mailService.sendActivationLink(user.email, link);
+        // const link = randomUUID();
+        // await mailService.sendActivationLink(user.email, link);
         const tokens = tokenService.generateTokens({ id: user.id, username: user.username });
         await tokenService.saveTokens(user.id, tokens.refreshToken);
         return tokens;
@@ -38,7 +38,15 @@ class AuthService {
         }
         const tokens = tokenService.generateTokens({ id: user.id, username: user.username });
         await tokenService.saveTokens(user.id, tokens.refreshToken);
-        return tokens;
+        return {
+            tokens,
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                fullname: user.fullname
+            }
+        };
     }
 
     refresh = async (refreshToken) => {
