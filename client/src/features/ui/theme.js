@@ -6,7 +6,11 @@ const theme = createTheme({
         mono: {
             main: grey[800],
             contrastText: grey[50]
-        }
+        },
+        bluish: {
+            main: '#9B9E9D',
+            contrastText: '#D9DEDC'
+          },
     },
     typography: {
         fontFamily: `"Montserrat", sans-serif`,
