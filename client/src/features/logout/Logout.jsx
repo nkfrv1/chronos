@@ -1,6 +1,6 @@
 function Logout() {
     return (
-        // Here we need modal window to let the user confirm his logout
+        // TODO: modal window to let the user confirm the logout
         <>
         </>
     );

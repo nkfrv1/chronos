@@ -1,9 +1,9 @@
 import axios from "axios";
-import AuthService from "./authService";
+import AuthService from "./AuthService";
 
 const $api = axios.create({
     withCredentials: true,
-    baseURL: 'http://localhost:5000/api'    // Probably, URL should be obtained from .env config
+    baseURL: `${import.meta.env.VITE_SERVER_URL}/api`
 });
 
 $api.interceptors.request.use(config => {

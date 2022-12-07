@@ -10,7 +10,7 @@ const theme = createTheme({
         bluish: {
             main: '#9B9E9D',
             contrastText: '#D9DEDC'
-          },
+        },
     },
     typography: {
         fontFamily: `"Montserrat", sans-serif`,

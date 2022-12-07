@@ -4,8 +4,8 @@ import $api from ".";
 class AuthService {
     static async register({ username, password, confirmation, email }) {
         try {
-            const { status } = await $api.post('/auth/register', { username, password, confirmation, email });
-            return status;
+            const response = await $api.post('/auth/register', { username, password, confirmation, email });
+            return response;
         } catch (e) {
             const errorStr = (Object.hasOwn(e.response.data, 'errors')) ?
                 `\n\t${e.response.data.errors.join('\n\t')}`
@@ -32,7 +32,7 @@ class AuthService {
 
     static async refreshToken() {
         try {
-            const response = await axios.get('http://localhost:5000/api/auth/refresh-token', { withCredentials: true });
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/auth/refresh-token`, { withCredentials: true });
             return response;
         } catch (e) {
             throw e;
