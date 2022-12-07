@@ -39,12 +39,12 @@ class CalendarService {
         return events;
     }
 
-    async update(calendarId, name, description, author, main, hidden) {
+    async update(calendarId, name, description, author, hidden) {
         const target = await Calendar.findByPk(calendarId);
         if (!target) {
             throw ApiError.BadRequest('Wrong calendar requested');
         }
-        await target.update({ name, description, author, main, hidden });
+        await target.update({ name, description, author, hidden });
         return target;
     }
 

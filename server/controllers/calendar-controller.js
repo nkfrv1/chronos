@@ -43,8 +43,8 @@ class CalendarController {
     async updateCalendar(req, res, next) {
         try {
             const requestedId = req.params.id;
-            const { name, description, author, main, hidden } = req.body;
-            const data = await calendarService.update(requestedId, name, description, author, main, hidden);
+            const { name, description, author, hidden } = req.body;
+            const data = await calendarService.update(requestedId, name, description, author, hidden);
             res.json(data);
         } catch (error) {
             next(error);

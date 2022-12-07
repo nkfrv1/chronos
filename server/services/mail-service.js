@@ -21,28 +21,10 @@ class MailService {
             html:
                 `
                     <div>
-                        <h1>Follow the link below and specify new password</h1>
+                        <h1>Follow the link below and specify your new password</h1>
                         <h3>
                             <a href="${process.env.CLIENT_URL}/password-reset/${token}">${process.env.CLIENT_URL}/password-reset/${token}</a>
                         </h3>    
-                        <p><em>Don't reply to this message</em></p>
-                    </div>
-                `
-        });
-    }
-
-    async sendActivationLink(email, link) {
-        await this.transporter.sendMail({
-            from: process.env.SMTP_EMAIL,
-            to: email,
-            subject: 'Chronos Account Activation',
-            html:
-                `
-                    <div>
-                        <h1>Follow the link below to activate your account</h1>
-                        <h3>
-                            <a href="${process.env.CLIENT_URL}/activation/${link}">*Click to Activate*</a>
-                        </h3>
                         <p><em>Don't reply to this message</em></p>
                     </div>
                 `

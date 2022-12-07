@@ -4,7 +4,7 @@ const calendarController = require('../controllers/calendar-controller');
 
 const router = new Router();
 
-router.post('/calendars', authMiddleware, calendarController.createCalendar);
+router.post('/calendars', calendarController.createCalendar);
 router.get('/calendars', authMiddleware, calendarController.getCalendars);
 router.get('/calendars/:id', authMiddleware, calendarController.getSpecificCalendar);
 router.get('/calendars/:id/events', authMiddleware, calendarController.getCalendarEvents);
