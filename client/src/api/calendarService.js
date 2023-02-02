@@ -28,12 +28,12 @@ class CalendarService {
         }
     }
 
-    static async getEvents() {
+    static async getEvents(calendarId) {
         try {
-            const { data } = await $api.get('/calendars/:id/events');
+            const { data } = await $api.get(`/calendars/${calendarId}/events`);
             return data;
         } catch (e) {
-            throw e;
+            return [];
         }
     }
 

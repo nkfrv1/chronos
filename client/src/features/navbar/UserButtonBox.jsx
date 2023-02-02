@@ -42,7 +42,7 @@ function UserButtonBox() {
     };
 
     return (
-        <Box sx={{ ml: 'auto' }}>
+        <Box>
             <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar src={userpic} />

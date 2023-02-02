@@ -1,10 +1,12 @@
 import { redirect } from "react-router-dom";
 import { store } from "../../app/store"
+import UserService from "../../api/UserService";
 
-export function checkUnauthorized() {
+export async function loadHomepage() {
     const { auth } = store.getState();
     if (!auth.isAuth) {
         return redirect('/login');
     }
-    return null;
+    const calendars = await UserService.getCalendars(auth.user.id);
+    return calendars;
 }

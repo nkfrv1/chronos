@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 const initialState = {
     isAuth: false,
     user: {
+        id: '',
         name: '',
         email: '',
         fullname: ''

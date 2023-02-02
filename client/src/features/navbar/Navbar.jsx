@@ -17,8 +17,21 @@ function Navbar() {
         <AppBar position="sticky" color="default" sx={{ borderTop: 3, borderColor: '#424242' }} >
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Box sx={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Box sx={{ display: { xs: 'none', sm: 'flex', md: 'flex' }, alignItems: 'center', position: 'fixed' }}>
+                    <Box sx={{
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        alignItems: 'center'
+                    }}>
+                        <Box sx={{
+                            height: '100%',
+                            display: { xs: 'none', sm: 'flex', md: 'flex' },
+                            alignItems: 'center',
+                            position: 'absolute',
+                            right: '50%',
+                            transform: 'translateX(+50%)'
+                        }}>
                             <Box component={Link} to="/" sx={{ color: 'inherit', textDecoration: 'none' }}>
                                 {/* <Box component="img" src={logo} alt="logo" sx={{ width: 40, height: 40, mx: 0.5, pb: 0.5 }} /> */}
                                 <Typography noWrap variant="h5">chronos</Typography>

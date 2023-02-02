@@ -8,11 +8,9 @@ import './App.css';
 
 function App() {
 	useEffect(() => {
-		(async function () {
-			if (localStorage.getItem('token')) {
-				await checkAuth();
-			}
-		})();
+		if (localStorage.getItem('token')) {
+			checkAuth();
+		}
 	}, []);
 
 	return (

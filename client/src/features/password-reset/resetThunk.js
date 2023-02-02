@@ -1,4 +1,4 @@
-import AuthService from "../../api/authService";
+import AuthService from "../../api/AuthService";
 
 export async function handleReset({ request, params }) {
     const formData = await request.formData();

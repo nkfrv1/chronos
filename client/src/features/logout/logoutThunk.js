@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import AuthService from "../../api/authService";
+import AuthService from "../../api/AuthService";
 import { logout } from "../../app/authSlice";
 import { store } from "../../app/store";
 

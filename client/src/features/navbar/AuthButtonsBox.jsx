@@ -4,7 +4,7 @@ import { Box, Button, Typography } from "@mui/material";
 
 function AuthButtonsBox() {
     return (
-        <Box sx={{ display: { xs: 'flex' }, ml: 'auto' }}>
+        <Box sx={{ display: { xs: 'flex' } }}>
             <Box
                 component={Link}
                 to="/login"

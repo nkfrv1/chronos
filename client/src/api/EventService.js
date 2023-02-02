@@ -1,7 +1,7 @@
 import $api from ".";
 
 class EventService {
-    static async create({ name, start, end, category, calendar }) {
+    static async create(name, start, end, category, calendar) {
         try {
             const { data } = await $api.post('/events', { name, start, end, category, calendar });
             return data;
@@ -28,7 +28,7 @@ class EventService {
         }
     }
 
-    static async update(id, { name, start, end, category, calendar }) {
+    static async update(id, name, start, end, category, calendar) {
         try {
             const { data } = await $api.patch(`/events/${id}`, { name, start, end, category, calendar });
             return data;

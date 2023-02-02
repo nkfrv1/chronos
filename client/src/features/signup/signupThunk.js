@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
-import AuthService from "../../api/authService";
-import CalendarService from "../../api/calendarService";
+import AuthService from "../../api/AuthService";
+import CalendarService from "../../api/CalendarService";
 
 export async function handleSignup({ request }) {
     try {

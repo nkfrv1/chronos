@@ -8,7 +8,7 @@ import PasswordReset from "../features/password-reset/PasswordReset";
 import { handleLogin } from "../features/login/loginThunk";
 import { handleSignup } from "../features/signup/signupThunk";
 import { handleLogout } from "../features/logout/logoutThunk";
-import { checkUnauthorized } from "../features/home/homeThunk";
+import { loadHomepage } from "../features/home/homeThunk";
 import { handleReset } from "../features/password-reset/resetThunk";
 
 const routes = [
@@ -20,7 +20,7 @@ const routes = [
             {
                 index: true,
                 element: <Home />,
-                loader: checkUnauthorized
+                loader: loadHomepage
             },
             {
                 path: '/signup',
@@ -48,7 +48,7 @@ const routes = [
             },
         ]
     }
-]
+];
 
 const appRouter = createBrowserRouter(routes);
 
